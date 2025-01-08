@@ -6,14 +6,17 @@ from git import Repo
 # Configuration
 REPO_PATH = os.getcwd()  # Automatically sets the current directory
 COMMITS_PER_DAY = 2  # Number of commits per day
-DAYS_BACK = 180  # How many days back to create commits
+START_DATE = datetime(2024, 1, 1)  # Start date (January 1st, 2024)
+END_DATE = datetime(2024, 7, 15)  # End date (July 15th, 2024)
 
 # Initialize the repo
 repo = Repo(REPO_PATH)
-start_date = datetime.now() - timedelta(days=DAYS_BACK)
 
-for day in range(DAYS_BACK):
-    commit_date = start_date + timedelta(days=day)
+# Calculate total days in the range
+total_days = (END_DATE - START_DATE).days + 1
+
+for day in range(total_days):
+    commit_date = START_DATE + timedelta(days=day)
     for _ in range(COMMITS_PER_DAY):
         # Randomize time within the day
         commit_time = commit_date + timedelta(seconds=random.randint(0, 86400))
